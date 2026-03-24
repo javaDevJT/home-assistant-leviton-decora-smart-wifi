@@ -20,6 +20,7 @@ from .const import (
     MOTION_NIGHT_MODE_MAP,
     MOTION_SNOOZE_MAP,
     MOTION_TIMEOUT_MAP,
+    SUPPORTED_DEVICES_BRIDGE,
     STATUS_LED_MODE_MAP,
     SUPPORTED_DEVICES_CONTROLLER,
     SUPPORTED_DEVICES_FAN,
@@ -970,6 +971,11 @@ class Device:
         return bool(self.model in SUPPORTED_DEVICES_MODEL)
 
     @property
+    def is_bridge(self) -> bool:
+        """Is bridge."""
+        return bool(self.model in SUPPORTED_DEVICES_BRIDGE)
+
+    @property
     def is_controller(self) -> bool:
         """Is controller."""
         return bool(self.model in SUPPORTED_DEVICES_CONTROLLER)
@@ -1025,7 +1031,7 @@ class Device:
         """Is switch."""
         return all(
             [
-                SUPPORTED_DEVICES_SWITCH,
+                self.model in SUPPORTED_DEVICES_SWITCH,
                 not self.is_fan,
                 not self.is_light,
             ]
