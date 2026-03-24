@@ -286,6 +286,11 @@ class Device:
         """Status LED behavior options."""
         return list(STATUS_LED_MODE_MAP.values())
 
+    @property
+    def supports_status_led_behavior(self) -> bool:
+        """Supports status LED behavior configuration."""
+        return not self.is_bridge and not self.is_controller and not self.is_gfci
+
     @status_led_behavior.setter
     def status_led_behavior(self, value: str) -> None:
         if value not in self.status_led_behavior_options:
@@ -515,6 +520,11 @@ class Device:
     def auto_shutoff_options(self) -> list[str]:
         """Auto shutoff options."""
         return list(AUTO_SHUTOFF_MAP.values())
+
+    @property
+    def supports_auto_shutoff(self) -> bool:
+        """Supports auto shutoff configuration."""
+        return not self.is_bridge and not self.has_motion_sensor and not self.is_gfci
 
     @auto_shutoff.setter
     def auto_shutoff(self, value: str) -> None:

@@ -63,3 +63,12 @@ class DeviceSupportTest(unittest.TestCase):
     def test_gfci_and_bridge_are_not_primary_switches(self):
         self.assertFalse(make_device("D2GF2").is_switch)
         self.assertFalse(make_device("MLWSB").is_switch)
+
+    def test_bridge_is_diagnostic_only_for_load_configuration(self):
+        bridge = make_device("MLWSB")
+        dimmer = make_device("DN6HD", canSetLevel=True)
+
+        self.assertFalse(bridge.supports_auto_shutoff)
+        self.assertFalse(bridge.supports_status_led_behavior)
+        self.assertTrue(dimmer.supports_auto_shutoff)
+        self.assertTrue(dimmer.supports_status_led_behavior)
